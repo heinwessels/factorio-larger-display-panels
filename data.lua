@@ -6,13 +6,15 @@ assert(base_item)
 local base_recipe = data.raw["recipe"]["display-panel"]
 assert(base_recipe)
 
-local technology = data.raw["technology"]["circuit-network"]
+local technology_one = data.raw["technology"]["circuit-network"]
+local technology_two = data.raw["technology"]["advanced-combinators"]
 
 ---@class (exact) PanelConfiguration
 ---@field name string
 ---@field scale int
 ---@field order_postix string
 ---@field icon_overlay string
+---@field technology data.TechnologyPrototype?
 
 ---@param config PanelConfiguration
 ---@return data.DisplayPanelPrototype
@@ -41,7 +43,6 @@ local function make_panel(config)
             layer.shift = util.mul_shift(layer.shift, config.scale)
 
             -- Attempt to have the sprites not be compressed in medium quality
-            -- TODO Does this work?
             layer.flags = layer.flags or { }
             table.insert(layer.flags, "no-scale")
         end
@@ -89,17 +90,17 @@ local function make_panel(config)
     local recipe = table.deepcopy(base_recipe)
     recipe.name = config.name
     recipe.results[1].name = config.name -- TODO Be smarter
-    recipe.enabled = technology == nil -- Enabled as fallback for now
+    recipe.enabled = config.technology == nil -- Enabled as fallback for now
     recipe.energy_required = (recipe.energy_required or 0.5) * config.scale
     for _, ingredient in pairs(recipe.ingredients) do
         ingredient.amount = ingredient.amount * config.scale * config.scale
     end
 
     -- TECHNOLOGY --------------------
-    if technology then
+    if config.technology then
         -- TODO Add it in the array just after the display-panel
         -- so it shows nicely in the technology GUI
-        table.insert(technology.effects, {
+        table.insert(config.technology.effects, {
             type = "unlock-recipe",
             recipe = config.name
         })
@@ -110,6 +111,6 @@ local function make_panel(config)
 end
 
 
-make_panel({name = "medium-display-panel", scale = 2, order_postix="-a", icon_overlay="m"})
-make_panel({name = "big-display-panel",    scale = 4, order_postix="-b", icon_overlay="b"})
-make_panel({name = "giant-display-panel",  scale = 6, order_postix="-c", icon_overlay="g"})
+make_panel({name = "medium-display-panel", scale = 2, order_postix="-a", icon_overlay="m", technology = technology_one})
+make_panel({name = "big-display-panel",    scale = 4, order_postix="-b", icon_overlay="b", technology = technology_two})
+make_panel({name = "giant-display-panel",  scale = 6, order_postix="-c", icon_overlay="g", technology = technology_two})

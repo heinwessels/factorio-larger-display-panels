@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Date: 27.11.2024
+  Changes:
+    - Big and Giant display panels are now unlocked alongside the selector combinator.
   Bugfixes:
     - Fixed item icons not showing correctly in inventory.
 ---------------------------------------------------------------------------------------------------
