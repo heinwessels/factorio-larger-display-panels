@@ -1,6 +1,6 @@
 {
   "name": "larger-display-panels",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "title": "Larger Display Panels",
   "description": "Provides larger Display Panels. Includes a 2x2, 4x4 and 6x6 sized panel. These work just like the normal Display Panels, but they're bigger.",
   "author": "stringweasel",

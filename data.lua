@@ -74,13 +74,14 @@ local function make_panel(config)
     item.icons = {
         {
             icon = item.icon,
-            icon_size = item.icon_size
+            icon_size = item.icon_size,
+            scale = 1,
         },
         {
             icon = "__larger-display-panels__/graphics/icons/"..config.icon_overlay..".png",
             icon_size = 64,
             scale = 0.7,
-            shift = { -3, -3}
+            shift = { -8, -8}
         }
     }
 
