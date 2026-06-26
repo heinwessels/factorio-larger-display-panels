@@ -82,9 +82,19 @@ local function make_panel(config)
             icon = "__larger-display-panels__/graphics/icons/"..config.icon_overlay..".png",
             icon_size = 64,
             scale = 0.7,
-            shift = { -8, -8}
+            shift = { -8, -8},
         }
     }
+    item.icon = nil
+    item.icon_size = nil
+
+    -- This fixes the drawing of the items inside inventories, where it was usually too big.
+    -- I don't understand why I need this workaround.
+    local dark_scale = 0.5
+    item.dark_background_icons = table.deepcopy(item.icons)
+    item.dark_background_icons[1].scale = item.dark_background_icons[1].scale * dark_scale
+    item.dark_background_icons[2].scale = item.dark_background_icons[2].scale * dark_scale
+    item.dark_background_icons[2].shift = util.mul_shift(item.dark_background_icons[2].shift, dark_scale)
 
     -- RECIPE --------------------
     local recipe = table.deepcopy(base_recipe)
